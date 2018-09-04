@@ -6,6 +6,7 @@
 package laboratoriodatos2;
 
 import java.util.ArrayList;
+import static laboratoriodatos2.Interfaz.ArbolitoTree;
 
 /**
  *
@@ -35,10 +36,8 @@ public class Arbol_N {
         this.Hijos = Hijos;
     }
 
-    
-
     public Arbol_N LlenarSegundoNivel() {
-        
+
         return null;
     }
 
@@ -58,23 +57,22 @@ public class Arbol_N {
         return this;
     }
 
-//    void Dominio(Arbol_N nuevo, ArrayList<Arbol_N> Hijos) {
-//         for (Arbol_N arbol_N : Hijos) {
-//                if () {
-//                    return true;
-//                } else {
-//                    check = RecursivoBuscador(arbol_N.getHijos(), x);
-//                    if (check == true) {
-//                        return check;
-//                    }
-//                }
-//            }
-//    }
     public boolean VerificarSiExiste(String x) {
         if (Dominio.equals(x) || (Dominio + "/").equals(x)) {
             return true;
         } else {
-            return RecursivoBuscador(this.getHijos(), x);
+            if (ArbolitoTree.getDominio().equals(this.Dominio)) {
+                return RecursivoBuscador(this.getHijos(), x);
+            } else {
+                boolean comprobador;
+                comprobador = RecursivoBuscador(ArbolitoTree.getHijos(), x);
+                if (comprobador == false) {
+                    return RecursivoBuscador(this.getHijos(), x);
+                }else{
+                    return comprobador;
+                }
+                
+            }
         }
     }
 
