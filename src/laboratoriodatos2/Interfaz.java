@@ -143,21 +143,25 @@ public class Interfaz extends javax.swing.JFrame {
         ArbolitoTree = new Arbol_N(URL.getText());
         webCrawler wb = new webCrawler(ArbolitoTree);
         ArbolitoTree = Arbol_n_ario;
-        ArbolitoTree = wb.LLenarRecursivo(ArbolitoTree);
-        DefaultMutableTreeNode raiz = new DefaultMutableTreeNode(ArbolitoTree.getDominio());
-        for (Arbol_N hijos : ArbolitoTree.getHijos()) {
-            System.out.println("" + hijos.getDominio() + "" + hijos.getNumero());
-            DefaultMutableTreeNode ndo = new DefaultMutableTreeNode(hijos.getDominio());
-            for (Arbol_N hijos1 : hijos.getHijos()) {
-                DefaultMutableTreeNode ndo1 = new DefaultMutableTreeNode(hijos1.getDominio());
-                ndo.add(ndo1);
-            }
-            raiz.add(ndo);
-        }
+        DefaultMutableTreeNode raiz = LlenarJtree(ArbolitoTree);
         DefaultTreeModel model = new DefaultTreeModel(raiz);
         Jtree.setModel(model);
     }//GEN-LAST:event_Generar_ArbolActionPerformed
-
+    
+    public DefaultMutableTreeNode LlenarJtree(Arbol_N arbolito){
+        DefaultMutableTreeNode raiz = new DefaultMutableTreeNode(arbolito.getDominio());
+        DefaultMutableTreeNode ndo1;
+        for (Arbol_N Hijo : arbolito.getHijos()) {
+            if(Hijo.getHijos().size()==0){
+                ndo1 = new DefaultMutableTreeNode(Hijo.getDominio());
+            }else{
+                ndo1 = LlenarJtree(Hijo);
+            }
+            raiz.add(ndo1);
+        }
+        return raiz;
+    }
+    
     /**
      * @param args the command line arguments
      */

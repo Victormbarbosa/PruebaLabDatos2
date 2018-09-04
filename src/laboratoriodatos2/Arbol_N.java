@@ -16,20 +16,24 @@ public class Arbol_N {
 
     ArrayList<Arbol_N> Hijos = new ArrayList();
     String Dominio = null;
-    static int contador = 0;
-    int numero = 0;
+    static int contador = 1;
+    String DominioPuro = null;
 
     Arbol_N(String URL) {
         this.Dominio = URL;
-        numero = contador++;
-    }
-
-    public int getNumero() {
-        return numero;
+        if (URL.substring(0, 8).equals("https://")) {
+            this.DominioPuro = URL.substring(8, URL.length());
+        } else {
+            this.DominioPuro = URL.substring(7, URL.length());
+        }
     }
 
     public ArrayList<Arbol_N> getHijos() {
         return Hijos;
+    }
+
+    public Arbol_N getHijosEspecifico(int i) {
+        return Hijos.get(i);
     }
 
     public void setHijos(ArrayList<Arbol_N> Hijos) {
@@ -50,10 +54,42 @@ public class Arbol_N {
     }
 
     public Arbol_N InsertarEnArbol(String x) {
+        contador++;
         Arbol_N ab = new Arbol_N(x);
-        if (ab.getNumero() <= 100) {
-            this.Hijos.add(ab);
+        String[] componentes = ab.getDominioPuro().split("/");
+        if (this.getDominioPuro().equals(componentes[0])) {
+            return InsertarRecursivo(this.getDominio(), componentes, 1, this);
+        } else {
+            this.getHijos().add(ab);
         }
+
+        return this;
+    }
+
+    public String getDominioPuro() {
+        return DominioPuro;
+    }
+
+    public void setDominioPuro(String DominioPuro) {
+        this.DominioPuro = DominioPuro;
+    }
+
+    public Arbol_N InsertarRecursivo(String x, String[] componentes, int i, Arbol_N referencia) {
+        x = x + "/" + componentes[i++];
+        Arbol_N ab = new Arbol_N(x);
+        if (i < componentes.length) {
+        if (referencia.getHijos().size() > 0) {
+            for (Arbol_N arbolitos : referencia.getHijos()) {
+                if (arbolitos.getDominioPuro().equals(ab.getDominioPuro())) {
+                    return InsertarRecursivo(x, componentes, i++, arbolitos);
+                }
+            }
+
+        }
+        referencia.getHijos().add(ab);
+        return InsertarRecursivo(x, componentes, i++, referencia.getHijosEspecifico(referencia.getHijos().size() - 1));
+        }
+
         return this;
     }
 
@@ -61,18 +97,7 @@ public class Arbol_N {
         if (Dominio.equals(x) || (Dominio + "/").equals(x)) {
             return true;
         } else {
-            if (ArbolitoTree.getDominio().equals(this.Dominio)) {
                 return RecursivoBuscador(this.getHijos(), x);
-            } else {
-                boolean comprobador;
-                comprobador = RecursivoBuscador(ArbolitoTree.getHijos(), x);
-                if (comprobador == false) {
-                    return RecursivoBuscador(this.getHijos(), x);
-                }else{
-                    return comprobador;
-                }
-                
-            }
         }
     }
 
@@ -80,7 +105,7 @@ public class Arbol_N {
         if (Hijos.size() > 0) {
             boolean check = false;
             for (Arbol_N arbol_N : Hijos) {
-                if (arbol_N.getDominio().equals(x)) {
+                if (arbol_N.getDominio().equals(x) || (arbol_N.getDominio()+"/").equals(x)){
                     return true;
                 } else {
                     if (arbol_N.getHijos().size() > 0) {

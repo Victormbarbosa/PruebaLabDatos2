@@ -28,22 +28,6 @@ public class webCrawler {
         }
     }
 
-    public Arbol_N LLenarRecursivo(Arbol_N Receptor) {
-        webCrawler wc ;
-        for (Arbol_N HijosLlenables : Receptor.getHijos()) {
-            if (contador <= 100) {
-                wc = new webCrawler(HijosLlenables);
-                HijosLlenables.setHijos(Arbol_n_ario.getHijos());
-            }
-        }
-//        if (contador <= 100) {
-//            for (Arbol_N HijosRecursivos : Receptor.getHijos()) {
-//                HijosRecursivos.setHijos(LLenarRecursivo(HijosRecursivos).getHijos());
-//            }
-//        }
-        return Receptor;
-    }
-
     public void rastrear(URL url) {
         try {
             boolean esValida;
@@ -130,16 +114,17 @@ class Parser extends HTMLEditorKit.ParserCallback {
     public void CreacionDeArbol(URL dominio, String url, Arbol_N Arbol) {
         boolean verificadorlocal = false;
         if (!url.equals("") && !url.equals(" ") && !url.equals("/")) {
-            
-            if (url.substring(0, 8).equals("https://") || url.substring(0, 7).equals("http://")) {
-                verificadorlocal = Arbol.VerificarSiExiste(url);
-                if (verificadorlocal == false) {
-                    Arbol.InsertarEnArbol(url);
-                }
-            } else {
-                verificadorlocal = Arbol.VerificarSiExiste(dominio + url);
-                if (verificadorlocal == false) {
-                    Arbol.InsertarEnArbol(dominio + url);
+            if (contador <= 100) {
+                if (url.substring(0, 8).equals("https://") || url.substring(0, 7).equals("http://")) {
+                    verificadorlocal = Arbol.VerificarSiExiste(url);
+                    if (verificadorlocal == false) {
+                        Arbol.InsertarEnArbol(url);
+                    }
+                } else {
+                    verificadorlocal = Arbol.VerificarSiExiste(dominio + url);
+                    if (verificadorlocal == false) {
+                        Arbol.InsertarEnArbol(dominio + url);
+                    }
                 }
             }
         }
