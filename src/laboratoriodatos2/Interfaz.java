@@ -16,7 +16,7 @@ import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.TreePath;
 import static laboratoriodatos2.webCrawler.Arbol_n_ario;
-import static laboratoriodatos2.Arbol_N.contador;
+import static laboratoriodatos2.Nodo.contador;
 
 /**
  *
@@ -24,7 +24,7 @@ import static laboratoriodatos2.Arbol_N.contador;
  */
 public class Interfaz extends javax.swing.JFrame {
 
-    static Arbol_N ArbolitoTree;
+    static Nodo ArbolitoTree;
 
     /**
      * Creates new form Interfaz
@@ -184,7 +184,7 @@ public class Interfaz extends javax.swing.JFrame {
     private void Generar_ArbolActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Generar_ArbolActionPerformed
         ArbolitoTree = null;
         contador = 0;
-        ArbolitoTree = new Arbol_N(URL.getText());
+        ArbolitoTree = new Nodo(URL.getText());
         webCrawler wb = new webCrawler(ArbolitoTree);
         ArbolitoTree = Arbol_n_ario;
         ArbolitoTree = wb.LLenarRecursivo(ArbolitoTree);
@@ -202,10 +202,10 @@ public class Interfaz extends javax.swing.JFrame {
     URL.setText("");
     }//GEN-LAST:event_jButton1ActionPerformed
 
-    public DefaultMutableTreeNode LlenarJtree(Arbol_N arbolito) {
+    public DefaultMutableTreeNode LlenarJtree(Nodo arbolito) {
         DefaultMutableTreeNode raiz = new DefaultMutableTreeNode(arbolito.getDominio());
         DefaultMutableTreeNode ndo1;
-        for (Arbol_N Hijo : arbolito.getHijos()) {
+        for (Nodo Hijo : arbolito.getHijos()) {
             if (Hijo.getHijos().isEmpty()) {
                 ndo1 = new DefaultMutableTreeNode(Hijo.getDominio());
             } else {

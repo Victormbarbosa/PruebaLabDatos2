@@ -12,14 +12,14 @@ import static laboratoriodatos2.Interfaz.ArbolitoTree;
  *
  * @author Usuario
  */
-public class Arbol_N {
+public class Nodo {
 
-    ArrayList<Arbol_N> Hijos = new ArrayList();
+    ArrayList<Nodo> Hijos = new ArrayList();
     String Dominio = null;
     static int contador = 0;
     String DominioPuro = null;
 
-    Arbol_N(String URL) {
+    Nodo(String URL) {
         this.Dominio = URL;
         if (URL.substring(0, 8).equals("https://")) {
             this.DominioPuro = URL.substring(8, URL.length());
@@ -28,15 +28,15 @@ public class Arbol_N {
         }
     }
 
-    public ArrayList<Arbol_N> getHijos() {
+    public ArrayList<Nodo> getHijos() {
         return Hijos;
     }
 
-    public void setHijos(ArrayList<Arbol_N> Hijos) {
+    public void setHijos(ArrayList<Nodo> Hijos) {
         this.Hijos = Hijos;
     }
 
-    public Arbol_N LlenarSegundoNivel() {
+    public Nodo LlenarSegundoNivel() {
 
         return null;
     }
@@ -49,8 +49,8 @@ public class Arbol_N {
         this.Dominio = Dominio;
     }
 
-    public Arbol_N InsertarEnArbol(String x) {
-        Arbol_N ab = new Arbol_N(x);
+    public Nodo InsertarEnArbol(String x) {
+        Nodo ab = new Nodo(x);
         String[] componentes = ab.Dominio.split(this.Dominio);
         
         if (componentes.length>1) {
@@ -69,10 +69,10 @@ public class Arbol_N {
         }
     }
 
-    public boolean RecursivoBuscador(ArrayList<Arbol_N> Hijos, String x) {
+    public boolean RecursivoBuscador(ArrayList<Nodo> Hijos, String x) {
         if (Hijos.size() > 0) {
             boolean check = false;
-            for (Arbol_N arbol_N : Hijos) {
+            for (Nodo arbol_N : Hijos) {
                 if (arbol_N.getDominio().equals(x) || (arbol_N.getDominio() + "/").equals(x) || (arbol_N.getDominio() + ".html").equals(x)) {
                     return true;
                 } else {

@@ -9,17 +9,17 @@ import java.util.ArrayList;
 import javax.swing.text.MutableAttributeSet;
 import javax.swing.text.html.HTML;
 import javax.swing.text.html.HTMLEditorKit;
-import static laboratoriodatos2.Arbol_N.contador;
+import static laboratoriodatos2.Nodo.contador;
 import static laboratoriodatos2.Interfaz.ArbolitoTree;
 import static laboratoriodatos2.webCrawler.Arbol_n_ario;
 
 //clase auxiliar
 public class webCrawler {
 
-    public static Arbol_N Arbol_n_ario;
+    public static Nodo Arbol_n_ario;
 
-    webCrawler(Arbol_N ArbolitoLocal) {
-        Arbol_n_ario = new Arbol_N(ArbolitoLocal.getDominio());
+    webCrawler(Nodo ArbolitoLocal) {
+        Arbol_n_ario = new Nodo(ArbolitoLocal.getDominio());
         try {
             URL my_url = new URL(ArbolitoLocal.getDominio());
 
@@ -29,9 +29,9 @@ public class webCrawler {
         }
     }
 
-    public Arbol_N LLenarRecursivo(Arbol_N Receptor) {
+    public Nodo LLenarRecursivo(Nodo Receptor) {
         webCrawler wc;
-        for (Arbol_N HijosLlenables : Receptor.getHijos()) {
+        for (Nodo HijosLlenables : Receptor.getHijos()) {
             if (contador < 100) {
                 Arbol_n_ario = null;
                 wc = new webCrawler(HijosLlenables);
@@ -124,10 +124,10 @@ class Parser extends HTMLEditorKit.ParserCallback {
         }
     }
 
-    public void CreacionDeArbol(URL dominio, String url, Arbol_N Arbol) {
+    public void CreacionDeArbol(URL dominio, String url, Nodo Arbol) {
         boolean verificadorlocal = false;
         boolean verificadorauxiliar = false;
-        Arbol_N Arbolveri = null;
+        Nodo Arbolveri = null;
         if (!Arbol.DominioPuro.equals(ArbolitoTree.DominioPuro)) {
             Arbolveri = ArbolitoTree;
         }
