@@ -27,21 +27,15 @@ public class webCrawler {
         } catch (Exception ex) {
             ex.printStackTrace();
         }
-        System.out.println("" + Arbol_n_ario.getHijos().size());
     }
 
     public Arbol_N LLenarRecursivo(Arbol_N Receptor) {
         webCrawler wc;
         for (Arbol_N HijosLlenables : Receptor.getHijos()) {
             if (contador < 100) {
-
                 Arbol_n_ario = null;
                 wc = new webCrawler(HijosLlenables);
-                for (Arbol_N hijo : Arbol_n_ario.getHijos()) {
-                    if (ArbolitoTree.VerificarSiExiste(hijo.getDominio())) {
-                        HijosLlenables.getHijos().add(hijo);
-                    }
-                }
+                HijosLlenables.setHijos(Arbol_n_ario.getHijos());
             } else {
                 break;
             }
@@ -130,25 +124,31 @@ class Parser extends HTMLEditorKit.ParserCallback {
         }
     }
 
-    public void LlenarTodoElArbol() {
-    }
-
     public void CreacionDeArbol(URL dominio, String url, Arbol_N Arbol) {
         boolean verificadorlocal = false;
         if (!url.equals("") && !url.equals(" ") && !url.equals("/")) {
             if (contador < 100) {
-                if (url.substring(0, 8).equals("https://") || url.substring(0, 7).equals("http://")) {
-                    verificadorlocal = Arbol.VerificarSiExiste(url);
-                    if (verificadorlocal == false) {
-                        Arbol.InsertarEnArbol(url);
-                    }
+                Arbol_N Arbolveri;
+                if (!Arbol.DominioPuro.equals(ArbolitoTree.DominioPuro)) {
+                    Arbolveri = ArbolitoTree;
                 } else {
-                    verificadorlocal = Arbol.VerificarSiExiste(dominio + url);
-                    if (verificadorlocal == false) {
-                        Arbol.InsertarEnArbol(dominio + url);
-                    }
+                    Arbolveri = Arbol;
                 }
+                    if (url.substring(0, 8).equals("https://") || url.substring(0, 7).equals("http://")) {
+                        verificadorlocal = Arbolveri.VerificarSiExiste(url);
+                        if (verificadorlocal == false) {
+                            Arbol.InsertarEnArbol(url);
+                        }
+                    } else {
+                        verificadorlocal = Arbolveri.VerificarSiExiste(dominio + url);
+                        if (verificadorlocal == false) {
+                            Arbol.InsertarEnArbol(dominio + url);
+                        }
+                    }
+                
             }
         }
+
     }
+
 }
