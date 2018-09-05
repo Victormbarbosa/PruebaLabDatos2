@@ -126,26 +126,32 @@ class Parser extends HTMLEditorKit.ParserCallback {
 
     public void CreacionDeArbol(URL dominio, String url, Arbol_N Arbol) {
         boolean verificadorlocal = false;
+        boolean verificadorauxiliar = false;
+        Arbol_N Arbolveri = null;
+        if (!Arbol.DominioPuro.equals(ArbolitoTree.DominioPuro)) {
+            Arbolveri = ArbolitoTree;
+        }
         if (!url.equals("") && !url.equals(" ") && !url.equals("/")) {
             if (contador < 100) {
-                Arbol_N Arbolveri;
-                if (!Arbol.DominioPuro.equals(ArbolitoTree.DominioPuro)) {
-                    Arbolveri = ArbolitoTree;
-                } else {
-                    Arbolveri = Arbol;
-                }
-                    if (url.substring(0, 8).equals("https://") || url.substring(0, 7).equals("http://")) {
-                        verificadorlocal = Arbolveri.VerificarSiExiste(url);
-                        if (verificadorlocal == false) {
-                            Arbol.InsertarEnArbol(url);
-                        }
-                    } else {
-                        verificadorlocal = Arbolveri.VerificarSiExiste(dominio + url);
-                        if (verificadorlocal == false) {
-                            Arbol.InsertarEnArbol(dominio + url);
-                        }
+
+                if (url.substring(0, 8).equals("https://") || url.substring(0, 7).equals("http://")) {
+                    verificadorlocal = Arbol.VerificarSiExiste(url);
+                    if (Arbolveri != null) {
+                        verificadorauxiliar = Arbolveri.VerificarSiExiste(url);
                     }
-                
+                    if (verificadorlocal == false && verificadorauxiliar == false) {
+                        Arbol.InsertarEnArbol(url);
+                    }
+                } else {
+                    verificadorlocal = Arbol.VerificarSiExiste(dominio + url);
+                    if (Arbolveri != null) {
+                        verificadorauxiliar = Arbolveri.VerificarSiExiste(dominio + url);
+                    }
+                    if (verificadorlocal == false && verificadorauxiliar == false) {
+                        Arbol.InsertarEnArbol(dominio + url);
+                    }
+                }
+
             }
         }
 

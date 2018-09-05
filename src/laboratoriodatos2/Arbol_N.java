@@ -51,8 +51,9 @@ public class Arbol_N {
 
     public Arbol_N InsertarEnArbol(String x) {
         Arbol_N ab = new Arbol_N(x);
-        String[] componentes = ab.DominioPuro.split("/");
-        if (ArbolitoTree.DominioPuro.equals(componentes[0])) {
+        String[] componentes = ab.Dominio.split(this.Dominio);
+        
+        if (componentes.length>1) {
             contador++;
             this.Hijos.add(ab);
         }

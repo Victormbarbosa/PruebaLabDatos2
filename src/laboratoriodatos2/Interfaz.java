@@ -54,11 +54,8 @@ public class Interfaz extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         Tnodo = new javax.swing.JTextField();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        Tarea = new javax.swing.JTextArea();
         jScrollPane3 = new javax.swing.JScrollPane();
         URL = new javax.swing.JTextArea();
-        jLabel5 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
 
         jLabel3.setText("jLabel3");
@@ -77,11 +74,6 @@ public class Interfaz extends javax.swing.JFrame {
 
         javax.swing.tree.DefaultMutableTreeNode treeNode1 = new javax.swing.tree.DefaultMutableTreeNode("Raiz");
         Jtree.setModel(new javax.swing.tree.DefaultTreeModel(treeNode1));
-        Jtree.addTreeSelectionListener(new javax.swing.event.TreeSelectionListener() {
-            public void valueChanged(javax.swing.event.TreeSelectionEvent evt) {
-                JtreeValueChanged(evt);
-            }
-        });
         jScrollPane1.setViewportView(Jtree);
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
@@ -131,21 +123,11 @@ public class Interfaz extends javax.swing.JFrame {
             }
         });
 
-        Tarea.setColumns(20);
-        Tarea.setFont(new java.awt.Font("Monospaced", 0, 14)); // NOI18N
-        Tarea.setLineWrap(true);
-        Tarea.setRows(5);
-        jScrollPane2.setViewportView(Tarea);
-
         URL.setColumns(20);
         URL.setFont(new java.awt.Font("Monospaced", 0, 14)); // NOI18N
         URL.setLineWrap(true);
         URL.setRows(5);
         jScrollPane3.setViewportView(URL);
-
-        jLabel5.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jLabel5.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel5.setText("Elemento Seleccionado");
 
         jButton1.setText("Limpiar Direccion");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -162,14 +144,12 @@ public class Interfaz extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
                         .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(jButton1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 176, Short.MAX_VALUE)
                             .addComponent(Tnodo, javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jScrollPane3, javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(Generar_Arbol, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addContainerGap())))
@@ -189,11 +169,7 @@ public class Interfaz extends javax.swing.JFrame {
                 .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(Tnodo, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addGap(246, 246, 246)
                 .addComponent(Generar_Arbol, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -208,7 +184,6 @@ public class Interfaz extends javax.swing.JFrame {
     private void Generar_ArbolActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Generar_ArbolActionPerformed
         ArbolitoTree = null;
         contador = 0;
-        Tarea.setText(" ");
         ArbolitoTree = new Arbol_N(URL.getText());
         webCrawler wb = new webCrawler(ArbolitoTree);
         ArbolitoTree = Arbol_n_ario;
@@ -218,15 +193,6 @@ public class Interfaz extends javax.swing.JFrame {
         Jtree.setModel(model);
         Tnodo.setText(String.valueOf(contador));
     }//GEN-LAST:event_Generar_ArbolActionPerformed
-
-    private void JtreeValueChanged(javax.swing.event.TreeSelectionEvent evt) {//GEN-FIRST:event_JtreeValueChanged
-        DefaultMutableTreeNode parentNode = null;
-        TreePath parentPath = Jtree.getSelectionPath();
-        parentNode = (DefaultMutableTreeNode) (parentPath.getLastPathComponent());
-        if (parentNode.isLeaf()) {
-        Tarea.setText(parentPath.getLastPathComponent().toString());
-        }
-    }//GEN-LAST:event_JtreeValueChanged
 
     private void TnodoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TnodoActionPerformed
         // TODO add your handling code here:
@@ -288,7 +254,6 @@ public class Interfaz extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton Generar_Arbol;
     private javax.swing.JTree Jtree;
-    private javax.swing.JTextArea Tarea;
     private javax.swing.JTextField Tnodo;
     private javax.swing.JTextArea URL;
     private javax.swing.JButton jButton1;
@@ -296,12 +261,10 @@ public class Interfaz extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     // End of variables declaration//GEN-END:variables
 }
