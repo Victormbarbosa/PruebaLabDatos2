@@ -10,6 +10,7 @@ import javax.swing.text.MutableAttributeSet;
 import javax.swing.text.html.HTML;
 import javax.swing.text.html.HTMLEditorKit;
 import static laboratoriodatos2.Arbol_N.contador;
+import static laboratoriodatos2.Interfaz.ArbolitoTree;
 import static laboratoriodatos2.webCrawler.Arbol_n_ario;
 
 //clase auxiliar
@@ -26,21 +27,26 @@ public class webCrawler {
         } catch (Exception ex) {
             ex.printStackTrace();
         }
+        System.out.println("" + Arbol_n_ario.getHijos().size());
     }
 
     public Arbol_N LLenarRecursivo(Arbol_N Receptor) {
-        webCrawler wc ;
+        webCrawler wc;
         for (Arbol_N HijosLlenables : Receptor.getHijos()) {
-            if (contador <= 100) {
+            if (contador < 100) {
+
+                Arbol_n_ario = null;
                 wc = new webCrawler(HijosLlenables);
-                HijosLlenables.setHijos(Arbol_n_ario.getHijos());
+                for (Arbol_N hijo : Arbol_n_ario.getHijos()) {
+                    if (ArbolitoTree.VerificarSiExiste(hijo.getDominio())) {
+                        HijosLlenables.getHijos().add(hijo);
+                    }
+                }
+            } else {
+                break;
             }
         }
-//        if (contador <= 100) {
-//            for (Arbol_N HijosRecursivos : Receptor.getHijos()) {
-//                HijosRecursivos.setHijos(LLenarRecursivo(HijosRecursivos).getHijos());
-//            }
-//        }
+
         return Receptor;
     }
 
@@ -130,19 +136,19 @@ class Parser extends HTMLEditorKit.ParserCallback {
     public void CreacionDeArbol(URL dominio, String url, Arbol_N Arbol) {
         boolean verificadorlocal = false;
         if (!url.equals("") && !url.equals(" ") && !url.equals("/")) {
-            
-            if (url.substring(0, 8).equals("https://") || url.substring(0, 7).equals("http://")) {
-                verificadorlocal = Arbol.VerificarSiExiste(url);
-                if (verificadorlocal == false) {
-                    Arbol.InsertarEnArbol(url);
-                }
-            } else {
-                verificadorlocal = Arbol.VerificarSiExiste(dominio + url);
-                if (verificadorlocal == false) {
-                    Arbol.InsertarEnArbol(dominio + url);
+            if (contador < 100) {
+                if (url.substring(0, 8).equals("https://") || url.substring(0, 7).equals("http://")) {
+                    verificadorlocal = Arbol.VerificarSiExiste(url);
+                    if (verificadorlocal == false) {
+                        Arbol.InsertarEnArbol(url);
+                    }
+                } else {
+                    verificadorlocal = Arbol.VerificarSiExiste(dominio + url);
+                    if (verificadorlocal == false) {
+                        Arbol.InsertarEnArbol(dominio + url);
+                    }
                 }
             }
         }
-
     }
 }

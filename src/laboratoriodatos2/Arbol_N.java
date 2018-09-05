@@ -16,16 +16,16 @@ public class Arbol_N {
 
     ArrayList<Arbol_N> Hijos = new ArrayList();
     String Dominio = null;
-    static int contador = 0;
-    int numero = 0;
+    static int contador =0;
+    String DominioPuro = null;
 
     Arbol_N(String URL) {
         this.Dominio = URL;
-        numero = contador++;
-    }
-
-    public int getNumero() {
-        return numero;
+        if (URL.substring(0, 8).equals("https://")) {
+            this.DominioPuro = URL.substring(8, URL.length());
+        } else {
+            this.DominioPuro = URL.substring(7, URL.length());
+        }
     }
 
     public ArrayList<Arbol_N> getHijos() {
@@ -51,28 +51,27 @@ public class Arbol_N {
 
     public Arbol_N InsertarEnArbol(String x) {
         Arbol_N ab = new Arbol_N(x);
-        if (ab.getNumero() <= 100) {
+//        String[] copuros = this.DominioPuro.split("/");
+//        String[] componentes = ab.DominioPuro.split("/");
+//        int nivel = copuros.length;
+//        String verificador="";
+//        for (int i = 0; i < nivel; i++) {
+//            verificador = verificador + componentes[0] + "/";
+//        }
+//        verificador = verificador.substring(0, verificador.length()-1);
+//        if(this.DominioPuro.equals(verificador)){
+            contador++;
             this.Hijos.add(ab);
-        }
+//        }    
         return this;
+        
     }
 
     public boolean VerificarSiExiste(String x) {
-        if (Dominio.equals(x) || (Dominio + "/").equals(x)) {
+        if (Dominio.equals(x) || (Dominio + "/").equals(x) || (Dominio+".html").equals(x)) {
             return true;
         } else {
-            if (ArbolitoTree.getDominio().equals(this.Dominio)) {
                 return RecursivoBuscador(this.getHijos(), x);
-            } else {
-                boolean comprobador;
-                comprobador = RecursivoBuscador(ArbolitoTree.getHijos(), x);
-                if (comprobador == false) {
-                    return RecursivoBuscador(this.getHijos(), x);
-                }else{
-                    return comprobador;
-                }
-                
-            }
         }
     }
 
@@ -80,7 +79,7 @@ public class Arbol_N {
         if (Hijos.size() > 0) {
             boolean check = false;
             for (Arbol_N arbol_N : Hijos) {
-                if (arbol_N.getDominio().equals(x)) {
+                if (arbol_N.getDominio().equals(x) || (arbol_N.getDominio()+"/").equals(x) || (arbol_N.getDominio()+".html").equals(x)){
                     return true;
                 } else {
                     if (arbol_N.getHijos().size() > 0) {

@@ -50,6 +50,7 @@ public class Interfaz extends javax.swing.JFrame {
         URL = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMaximumSize(new java.awt.Dimension(900, 585));
@@ -101,6 +102,10 @@ public class Interfaz extends javax.swing.JFrame {
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));
         jLabel2.setText("graficar en un Arbol");
 
+        jLabel3.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(0, 255, 204));
+        jLabel3.setText("Version 1");
+
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
@@ -115,6 +120,10 @@ public class Interfaz extends javax.swing.JFrame {
                             .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 176, Short.MAX_VALUE)
                             .addComponent(URL))
                         .addContainerGap())))
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addGap(29, 29, 29)
+                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -125,7 +134,9 @@ public class Interfaz extends javax.swing.JFrame {
                 .addComponent(jLabel2)
                 .addGap(18, 18, 18)
                 .addComponent(URL, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 405, Short.MAX_VALUE)
+                .addGap(37, 37, 37)
+                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 263, Short.MAX_VALUE)
                 .addComponent(Generar_Arbol, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -143,21 +154,28 @@ public class Interfaz extends javax.swing.JFrame {
         ArbolitoTree = new Arbol_N(URL.getText());
         webCrawler wb = new webCrawler(ArbolitoTree);
         ArbolitoTree = Arbol_n_ario;
+        System.out.println(""+ArbolitoTree.getHijos().size());
         ArbolitoTree = wb.LLenarRecursivo(ArbolitoTree);
-        DefaultMutableTreeNode raiz = new DefaultMutableTreeNode(ArbolitoTree.getDominio());
-        for (Arbol_N hijos : ArbolitoTree.getHijos()) {
-            System.out.println("" + hijos.getDominio() + "" + hijos.getNumero());
-            DefaultMutableTreeNode ndo = new DefaultMutableTreeNode(hijos.getDominio());
-            for (Arbol_N hijos1 : hijos.getHijos()) {
-                DefaultMutableTreeNode ndo1 = new DefaultMutableTreeNode(hijos1.getDominio());
-                ndo.add(ndo1);
-            }
-            raiz.add(ndo);
-        }
+        System.out.println(""+contador);
+        DefaultMutableTreeNode raiz = LlenarJtree(ArbolitoTree);
         DefaultTreeModel model = new DefaultTreeModel(raiz);
         Jtree.setModel(model);
     }//GEN-LAST:event_Generar_ArbolActionPerformed
 
+    public DefaultMutableTreeNode LlenarJtree(Arbol_N arbolito){
+        DefaultMutableTreeNode raiz = new DefaultMutableTreeNode(arbolito.getDominio());
+        DefaultMutableTreeNode ndo1;
+        for (Arbol_N Hijo : arbolito.getHijos()) {
+            if(Hijo.getHijos().isEmpty()){
+                ndo1 = new DefaultMutableTreeNode(Hijo.getDominio());
+            }else{
+                ndo1 = LlenarJtree(Hijo);
+            }
+            raiz.add(ndo1);
+        }
+        return raiz;
+    }
+    
     /**
      * @param args the command line arguments
      */
@@ -199,6 +217,7 @@ public class Interfaz extends javax.swing.JFrame {
     private javax.swing.JTextField URL;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
